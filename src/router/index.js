@@ -20,19 +20,11 @@ const router = createRouter({
   ],
 });
 // eslint-disable-next-line consistent-return
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-};
-const isAuthenticated = getCookie('token');
+
 // eslint-disable-next-line consistent-return
 router.beforeEach(async (to) => {
-  checkUser()
-    .then(() => {
-      alert('歡迎回來');
-      router.push('/admin');
-    })
+  const isAuthenticated = await checkUser()
+    .then((res) => res.config.headers.authorization)
     .catch(() => alert('請重新登入'));
   if (
     // make sure the user is authenticated
