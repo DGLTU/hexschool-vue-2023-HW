@@ -26,9 +26,14 @@ const getCookie = (name) => {
   if (parts.length === 2) return parts.pop().split(';').shift();
 };
 const isAuthenticated = getCookie('token');
-checkUser().then(() => alert('歡迎回來')).catch(() => alert('請重新登入'));
 // eslint-disable-next-line consistent-return
 router.beforeEach(async (to) => {
+  checkUser()
+    .then(() => {
+      alert('歡迎回來');
+      router.push('/admin');
+    })
+    .catch(() => alert('請重新登入'));
   if (
     // make sure the user is authenticated
     !isAuthenticated
