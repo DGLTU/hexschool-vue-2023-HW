@@ -1,8 +1,8 @@
 <script setup>
 import 'tw-elements';
 import { ref, onMounted } from 'vue';
-import ProductModal from '../components/ProductModal.vue';
 import { getProductApi } from '../js/api';
+import ProductModal from '../components/ProductModal.vue';
 
 const products = ref();
 const productData = ref({});
