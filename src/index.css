@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*productModal*/
+.productModal{
+  @apply fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto;
+}
+.productModal-content{
+  @apply border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current;
+}
+.productModal-header{
+  @apply flex 
+        flex-shrink-0
+        items-center
+        justify-between
+        p-4
+        bg-slate-900
+        border-b border-gray-200
+        rounded-t-md;
+}
+.productModal-header-h5{
+  @apply flex items-center text-4xl font-medium leading-normal text-gray-200;
+}
+.productModal-input{
+  @apply form-control
+  block
+  w-full
+  px-3
+  py-1.5
+  text-base
+  font-normal
+  text-gray-700
+  bg-white bg-clip-padding
+  border border-solid border-gray-300
+  rounded
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none bg-white bg-clip-padding
+  border border-solid border-gray-300;
+}
+.productModal-input-checkbox{
+  @apply form-check-input;
+}
+.productModal-label{
+  @apply form-control inline-block my-2 text-gray-700;
+}
+.productModal-btn-close{
+  @apply 
+  box-content
+  w-5
+  h-5
+  text-2xl
+  text-gray-200
+  border-none
+  rounded-none
+  focus:shadow-none focus:outline-none focus:opacity-100
+  hover:text-gray-200 hover:opacity-75 hover:no-underline;
+}
+.productModal-footer{
+  @apply flex 
+  items-center
+  justify-end
+  p-4
+  border-t border-gray-200
+  rounded-b-md;
+}
+.productModal-image-group{
+  @apply mt-8;
+}
+
+/* 後台產品列表-表格 */
+.t-head-th{
+  @apply text-base font-medium text-gray-900 px-6 py-4 text-left;
+}
+.t-body-tr{
+  @apply bg-white
+  border-b
+  transition
+  duration-300
+  ease-in-out
+  hover:bg-gray-100;
+}
+.t-body-td{
+  @apply px-6
+  py-4
+  whitespace-nowrap
+  text-base
+  font-medium
+  text-gray-900;
+}
+.t-btn-delete{
+  @apply mr-4
+  text-red-600
+  hover:text-red-700 hover:shadow-lg
+  focus:text-red-700;
+}
+.t-btn-edit{
+  @apply inline-block
+  p-2
+  bg-green-600
+  text-white
+  font-medium
+  text-xs
+  leading-tight
+  uppercase
+  rounded
+  shadow-md
+  hover:bg-green-700 hover:shadow-lg
+  focus:bg-green-700
+  focus:shadow-lg
+  focus:outline-none
+  focus:ring-0
+  active:bg-green-800 active:shadow-lg
+  transition
+  duration-150
+  ease-in-out;
+}
+/*按鈕*/
+.btn-primary{
+  @apply 
+  inline-block
+  p-3
+  bg-blue-600
+  text-white
+  font-medium
+  text-base
+  leading-tight
+  uppercase
+  rounded
+  shadow-md
+  hover:bg-blue-700 hover:shadow-lg
+  focus:bg-blue-700
+  focus:shadow-lg
+  focus:outline-none
+  focus:ring-0
+  active:bg-blue-800 active:shadow-lg
+  transition
+  duration-150
+  ease-in-out;
+}
+.btn-primary-cancel{
+  @apply 
+  inline-block
+  p-3
+  bg-slate-600
+  text-slate-200
+  font-medium
+  text-base
+  leading-tight
+  uppercase
+  rounded
+  shadow-md
+  hover:bg-slate-700 hover:shadow-lg
+  focus:bg-slate-700
+  focus:shadow-lg
+  focus:outline-none
+  focus:ring-0
+  active:bg-slate-800 active:shadow-lg
+  transition
+  duration-150
+  ease-in-out;
+}
