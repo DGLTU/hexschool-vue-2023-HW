@@ -28,6 +28,16 @@
         border-b border-gray-200
         rounded-t-md;
 }
+.productModal-header-delete{
+  @apply flex 
+        flex-shrink-0
+        items-center
+        justify-between
+        p-4
+        bg-red-600
+        border-b border-gray-200
+        rounded-t-md;
+}
 .productModal-header-h5{
   @apply flex items-center text-4xl font-medium leading-normal text-gray-200;
 }

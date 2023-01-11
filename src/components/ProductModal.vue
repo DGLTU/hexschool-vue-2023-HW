@@ -1,6 +1,6 @@
 <script setup>
 import { toRef } from 'vue';
-import { editProductApi, newProductApi } from '../js/api';
+import { editProductApi, newProductApi, delProductApi } from '../js/api';
 import 'tw-elements';
 
 const props = defineProps({
@@ -36,9 +36,8 @@ const isEmpty = () => {
   const descriptionStatus = (productTemp.value.description === undefined);
   const contentStatus = (productTemp.value.content === undefined);
   const imageStatus = (productTemp.value.imageUrl === undefined);
-  const isEnabledStatus = (productTemp.value.is_enabled === undefined);
   return ((titleStatus || categoryStatus || unitStatus || priceStatus || originPriceStatus
-  || descriptionStatus || contentStatus || imageStatus || isEnabledStatus));
+  || descriptionStatus || contentStatus || imageStatus));
 };
 const editProduct = (data, id) => {
   editProductApi({ data }, id)
@@ -51,24 +50,29 @@ const editProduct = (data, id) => {
     });
 };
 const newProduct = (data) => {
-  const addData = data;
   if (!isEmpty()) {
-    if (!addData.imagesUrl) {
-      addData.imagesUrl = [];
-      newProductApi({ data })
-        .then((res) => {
-          console.log(res);
-          alert('產品新增成功!');
-          emit('update');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    newProductApi({ data })
+      .then((res) => {
+        console.log(res);
+        alert('產品新增成功!');
+        emit('update');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
     alert('請填寫完整資訊');
   }
 };
+const delProduct = (id) => {
+  delProductApi(id)
+    .then(() => {
+      alert('刪除成功');
+      emit('update');
+    })
+    .catch((err) => console.log(err));
+};
+
 </script>
 
 <template>
@@ -92,7 +96,8 @@ const newProduct = (data) => {
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+    <div v-if="modalStatus!=='deleteProduct'"
+        class="modal-dialog modal-xl relative w-auto pointer-events-none">
       <div
         class="mod al-content productModal-content">
         <div
@@ -199,6 +204,8 @@ const newProduct = (data) => {
                 <input type="checkbox"
                       class="productModal-input-checkbox"
                       v-model="productTemp.is_enabled"
+                      :true-value="1"
+                      :false-value="0"
                       id="js-isEnabled">
             </div>
           </div>
@@ -214,12 +221,48 @@ const newProduct = (data) => {
           type="button"
           class="ml-4 btn-primary"
           v-if="modalStatus==='editProduct'"
-            @click="editProduct(productTemp, productTemp.id)">確認編輯</button>
+            @click="editProduct(productTemp, productTemp.id)" data-bs-dismiss="modal">確認編輯</button>
           <button
           type="button"
           class="ml-4 btn-primary"
           v-else-if="modalStatus==='newProduct'"
-          @click="newProduct(productTemp)">確認新增</button>
+          @click="newProduct(productTemp)" data-bs-dismiss="modal">確認新增</button>
+        </div>
+      </div>
+    </div>
+    <div v-else-if="modalStatus==='deleteProduct'"
+      class="modal-dialog modal-base relative w-auto pointer-events-none">
+      <div
+        class="mod al-content productModal-content">
+        <div
+          class="modal-header productModal-header-delete">
+          <h5
+            class="productModal-header-h5"
+            id="exampleModalLabel">
+            刪除產品
+          </h5>
+          <button
+            type="button"
+            class="productModal-btn-close text-gray-200"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body relative p-4">
+          確認刪除 {{productTemp.title}} ?
+        </div>
+        <div class="modal-footer productModal-footer">
+          <button
+            type="button"
+            class="btn-primary-cancel"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >取消</button>
+          <button
+            type="button"
+            class="ml-4 t-btn-delete"
+            @click="delProduct(productTemp.id)" data-bs-dismiss="modal">確認刪除
+          </button>
         </div>
       </div>
     </div>

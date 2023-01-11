@@ -1,7 +1,7 @@
 <script setup>
 import 'tw-elements';
 import { ref, onMounted } from 'vue';
-import { getProductApi, delProductApi } from '../js/api';
+import { getProductApi } from '../js/api';
 import ProductModal from '../components/ProductModal.vue';
 
 const products = ref();
@@ -22,15 +22,6 @@ const update = async () => {
     .then((res) => res.data.products)
     .catch((err) => console.log(err));
 };
-const delProduct = (id) => {
-  delProductApi(id)
-    .then(() => {
-      alert('刪除成功');
-      update();
-    })
-    .catch((err) => console.log(err));
-};
-
 </script>
 <template>
   <div class="w-1/2 mx-auto">
@@ -41,7 +32,7 @@ const delProduct = (id) => {
           <div class="overflow-hidden">
             <div class="flex justify-end">
               <button
-                  @click="openModal({}, 'newProduct')"
+                  @click="openModal({imagesUrl: [], is_enabled: 0}, 'newProduct')"
                   data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                   type="button"
                   data-mdb-ripple="true"
@@ -104,9 +95,13 @@ const delProduct = (id) => {
                     <p v-else class="text-lg font-bold">未啟用</p>
                   </td>
                   <td class="t-body-td">
-                    <button type="button"
-                            class="t-btn-delete"
-                            @click="delProduct(product.id)">
+                    <button
+                      class="t-btn-delete"
+                      @click="openModal(product, 'deleteProduct')"
+                      data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                      type="button"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light">
                       <i class="fa-solid fa-trash"></i>
                     </button>
                     <button
@@ -126,6 +121,6 @@ const delProduct = (id) => {
         </div>
       </div>
     </div>
-      <ProductModal :product="productData" @update="update" :modalStatus="modalStatus" />
+      <ProductModal :product="productData" @update="update" :modalStatus="modalStatus"/>
   </div>
 </template>
